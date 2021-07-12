@@ -92,7 +92,7 @@ describe('Handling .mov files', () => {
 
       await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
 
-      await page.keyboard.press('Escape');
+      await expect(page).toClick('.media-modal-close');
 
       await page.waitForSelector(MODAL, {
         visible: false,

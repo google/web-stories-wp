@@ -15,16 +15,21 @@
  */
 
 /**
- * WordPress dependencies
+ * Get the username of the user that's currently logged into WordPress (if any).
+ *
+ * @return {string?} username The user that's currently logged into WordPress (if any).
  */
-import { createURL } from '@wordpress/e2e-test-utils';
+async function getLoggedInUser() {
+  const cookies = await page.cookies();
+  const cookie = cookies.find((c) =>
+    Boolean(c?.name?.startsWith('wordpress_logged_in_'))
+  );
 
-async function logoutUser() {
-  await page.goto(createURL('wp-login.php', 'action=logout'));
-  await expect(page).toClick('a', { text: 'log out' });
-  await page.waitForNavigation();
+  if (!cookie?.value) {
+    return null;
+  }
 
-  await expect(page).toMatch(/You are now logged out/i);
+  return decodeURIComponent(cookie.value).split('|')[0];
 }
 
-export default logoutUser;
+export default getLoggedInUser;
