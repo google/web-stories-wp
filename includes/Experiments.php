@@ -408,6 +408,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Eyedropper', 'web-stories' ),
 				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
